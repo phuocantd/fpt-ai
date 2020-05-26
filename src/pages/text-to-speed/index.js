@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Input, Select, Radio } from "antd";
 import { CaretRightOutlined, PauseOutlined } from "@ant-design/icons";
-import axios from "axios";
+// import axios from "axios";
+import fetch from "node-fetch";
 
 import "./index.css";
 
@@ -53,17 +54,30 @@ export default function TextToSpeed() {
   const handleReset = () => {};
 
   const handleListen = () => {
-    axios({
-      method: "POST",
-      url: "https://api.fpt.ai/hmi/tts/v5",
+    // axios({
+    //   method: "GET",
+    //   url: "https://api.fpt.ai/hmi/tts/v5",
+    //   headers: {
+    //     voice: "leminh",
+    //     "api-key": "f5htaWIU8LDrF0qds4N5LiASRxKM26mo",
+    //   },
+    //   body: "xin chào các bác",
+    // })
+    //   .then((data) => console.log(data))
+    //   .catch((err) => console.log(err));
+    const body = "Xin chào các bạn, đây là đâu? tôi là ai?";
+
+    fetch("https://api.fpt.ai/hmi/tts/v5", {
+      method: "post",
+      body,
       headers: {
         voice: "leminh",
-        api_key: "f5htaWIU8LDrF0qds4N5LiASRxKM26mo",
+        "Content-Type": "application/json",
+        "api-key": "f5htaWIU8LDrF0qds4N5LiASRxKM26mo",
       },
-      body: "xin chào các bác",
     })
-      .then((data) => console.log(data))
-      .catch((err) => console.log(err));
+      .then((res) => res.json())
+      .then((json) => console.log(json));
   };
 
   return (
