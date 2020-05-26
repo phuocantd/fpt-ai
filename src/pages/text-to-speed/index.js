@@ -58,8 +58,7 @@ export default function TextToSpeed() {
       url: "https://api.fpt.ai/hmi/tts/v5",
       headers: {
         voice: "leminh",
-        // "X-TTS-NoCache": true,
-        "api-key": "f5htaWIU8LDrF0qds4N5LiASRxKM26mo",
+        api_key: "f5htaWIU8LDrF0qds4N5LiASRxKM26mo",
       },
       body: "xin chào các bác",
     })
@@ -103,10 +102,7 @@ export default function TextToSpeed() {
         </div>
         <div>
           <p>Voice</p>
-          <Select
-            value={speed}
-            onChange={handleChangSpeed}
-          >
+          <Select value={speed} onChange={handleChangSpeed}>
             <Option value="0">Giọng đọc cũ</Option>
             <Option value="1">Rất chậm</Option>
             <Option value="2">Chậm</Option>
