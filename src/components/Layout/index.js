@@ -50,28 +50,16 @@ function LayoutPage({ children }) {
               <span>Home</span>
             </Link>
           </Menu.Item>
-          <Menu.Item key="/translate">
-            <Link to="/translate">
-              <TranslationOutlined />
-              <span>Translate</span>
-            </Link>
-          </Menu.Item>
           <Menu.Item key="/text-to-speed">
             <Link to="/text-to-speed">
-              <AudioFilled />
+              <FileImageOutlined />
               <span>Text to speed</span>
             </Link>
           </Menu.Item>
-          <Menu.Item key="/moderation">
-            <Link to="/moderation">
-              <FileImageOutlined />
-              <span>Image moderation</span>
-            </Link>
-          </Menu.Item>
-          <Menu.Item key="/text-image">
-            <Link to="/text-image">
-              <FileTextOutlined />
-              <span>Text Image</span>
+          <Menu.Item key="/speed-to-text">
+            <Link to="/speed-to-text">
+              <AudioFilled />
+              <span>Speed to text</span>
             </Link>
           </Menu.Item>
         </Menu>

@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { Input, Select, Radio } from "antd";
-import { CaretRightOutlined, PauseOutlined } from "@ant-design/icons";
+import { Input, Select, Radio, Spin, Space } from "antd";
 // import axios from "axios";
-import fetch from "node-fetch";
+// import fetch from "node-fetch";
 
 import "./index.css";
+import { textToSpeed } from "../../api";
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -19,18 +19,26 @@ const voices = {
     { name: "Southern Accent: Lan Nhi (female)", value: "lannhi" },
   ],
   old: [
-    { name: "Northern Accent: Thu Dung (female)", value: "thudung" },
-    { name: "Northern Accent: Cao Chung (male)", value: "caochung" },
-    { name: "Northern Accent: Hà Tiểu Mai (female)", value: "caochung" },
+    { name: "Southern Accent: Hà Tiểu Mai (female)", value: "hatieumai" },
+    { name: "Central Accent: Ngọc Lam (female)", value: "ngoclam" },
+    { name: "Northern Accent: Male", value: "male" },
+    { name: "Northern Accent: Female", value: "female" },
   ],
 };
 
 export default function TextToSpeed() {
-  const [text, setText] = useState("");
+  const [text, setText] = useState("Bạn đang làm gì đó!!!");
   const [type, setType] = useState("new");
   const [voice, setVoice] = useState("banmai");
-  const [speed, setSpeed] = useState("3");
-  const [playing, setPlaying] = useState(false);
+  const [speed, setSpeed] = useState("0");
+  const [url, setUrl] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  // useEffect(() => {
+  //   textToSpeed(text).then((data) => {
+  //     setUrl(data.async)
+  //   });
+  // }, [text]);
 
   const handleChangeText = (e) => {
     setText(e.target.value);
@@ -49,35 +57,25 @@ export default function TextToSpeed() {
     setSpeed(value);
   };
 
-  const handleTextDefault = () => {};
+  const handleTextDefault = () => {
+    setText("Bạn đang làm gì đó!!!");
+  };
 
-  const handleReset = () => {};
+  const handleReset = () => {
+    setText("");
+  };
 
-  const handleListen = () => {
-    // axios({
-    //   method: "GET",
-    //   url: "https://api.fpt.ai/hmi/tts/v5",
-    //   headers: {
-    //     voice: "leminh",
-    //     "api-key": "f5htaWIU8LDrF0qds4N5LiASRxKM26mo",
-    //   },
-    //   body: "xin chào các bác",
-    // })
-    //   .then((data) => console.log(data))
-    //   .catch((err) => console.log(err));
-    const body = "Xin chào các bạn, đây là đâu? tôi là ai?";
-
-    fetch("https://api.fpt.ai/hmi/tts/v5", {
-      method: "post",
-      body,
-      headers: {
-        voice: "leminh",
-        "Content-Type": "application/json",
-        "api-key": "f5htaWIU8LDrF0qds4N5LiASRxKM26mo",
-      },
-    })
-      .then((res) => res.json())
-      .then((json) => console.log(json));
+  const handleLoadFile = () => {
+    if (text !== "")
+      textToSpeed(text, voice, parseInt(speed)).then((data) => {
+        setLoading(true);
+        setTimeout(() => {
+          console.log("save:", data.async);
+          setLoading(false);
+          setUrl(data.async);
+        }, 5000);
+        // console.log("loading:", data.async);
+      });
   };
 
   return (
@@ -115,15 +113,15 @@ export default function TextToSpeed() {
           </Select>
         </div>
         <div>
-          <p>Voice</p>
+          <p>Tốc độ</p>
           <Select value={speed} onChange={handleChangSpeed}>
-            <Option value="0">Giọng đọc cũ</Option>
-            <Option value="1">Rất chậm</Option>
-            <Option value="2">Chậm</Option>
-            <Option value="3">Bình thường</Option>
-            <Option value="4">Nhanh</Option>
-            <Option value="5">Rất nhanh</Option>
-            <Option value="6">Cực nhanh</Option>
+            <Option value="-3">Cực chậm</Option>
+            <Option value="-2">Rất chậm</Option>
+            <Option value="-1">Chậm</Option>
+            <Option value="0">Bình thường</Option>
+            <Option value="1">Nhanh</Option>
+            <Option value="2">Rất nhanh</Option>
+            <Option value="3">Cực nhanh</Option>
           </Select>
         </div>
         <div className="btn-group">
@@ -140,11 +138,21 @@ export default function TextToSpeed() {
           <button
             type="button"
             style={{ background: "#00f", color: "#fff" }}
-            onClick={handleListen}
+            onClick={handleLoadFile}
           >
-            {playing ? <PauseOutlined /> : <CaretRightOutlined />}
-            {playing ? "Stop the speed" : "Listen to speed"}
+            Tạo file
           </button>
+          <div style={{ marginTop: 20 }}>
+            {loading ? (
+              <Space size="middle">
+                <Spin size="large" />
+              </Space>
+            ) : (
+              <audio controls src={url}>
+                Audio
+              </audio>
+            )}
+          </div>
         </div>
       </div>
     </div>
