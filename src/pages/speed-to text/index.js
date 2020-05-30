@@ -77,7 +77,7 @@ export default function SpeedtoText() {
           />
         )}
       </div>
-      <p>{output}</p>
+      <p>{!isRecording && output}</p>
     </div>
   );
 }
