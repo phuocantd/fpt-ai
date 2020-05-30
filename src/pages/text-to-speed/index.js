@@ -70,7 +70,7 @@ export default function TextToSpeed() {
       textToSpeed(text, voice, parseInt(speed)).then((data) => {
         setLoading(true);
         setTimeout(() => {
-          console.log("save:", data.async);
+          // console.log("save:", data.async);
           setLoading(false);
           setUrl(data.async);
         }, 5000);

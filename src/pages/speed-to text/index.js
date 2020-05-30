@@ -28,7 +28,7 @@ export default function SpeedtoText() {
 
   const startRecord = () => {
     if (isBlocked) {
-      console.log("Permission Denied");
+      alert("Permission Denied");
     } else {
       Mp3Recorder.start()
         .then(() => {

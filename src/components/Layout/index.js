@@ -3,10 +3,8 @@ import "antd/dist/antd.css";
 import { Layout, Menu } from "antd";
 import {
   HomeOutlined,
-  TranslationOutlined,
   AudioFilled,
   FileImageOutlined,
-  FileTextOutlined,
 } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 
